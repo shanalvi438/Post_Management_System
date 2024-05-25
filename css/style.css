@@ -1,0 +1,152 @@
+/* styles.css */
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 20px 0;
+}
+
+.header-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 24px;
+}
+
+form#postForm {
+    background: #444;
+    padding: 15px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+}
+
+form#postForm input[type="text"],
+form#postForm textarea {
+    background: #555;
+    border: 1px solid #666;
+    color: #fff;
+    padding: 10px;
+    margin-right: 10px;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+form#postForm input[type="text"]::placeholder,
+form#postForm textarea::placeholder {
+    color: #bbb;
+}
+
+form#postForm input[type="text"]:focus,
+form#postForm textarea:focus {
+    border-color: #007BFF;
+    outline: none;
+}
+
+form#postForm textarea {
+    resize: vertical;
+    height: 50px; /* Adjust height as needed */
+}
+
+form#postForm button[type="submit"] {
+    background-color: #007BFF;
+    border: none;
+    border-radius: 4px;
+    color: #fff;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s;
+}
+
+form#postForm button[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+form#postForm button[type="submit"]:focus {
+    outline: none;
+}
+
+.post {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    padding: 20px;
+}
+
+.post h2 {
+    margin-top: 0;
+}
+
+.post p {
+    margin-bottom: 10px;
+}
+
+.comment {
+    border-bottom: 1px solid #ddd;
+    padding: 10px 0;
+}
+
+.comment:last-child {
+    border-bottom: none;
+}
+
+.comment span {
+    margin-left: 10px;
+    color: #666;
+}
+
+.commentForm {
+    margin-top: 20px;
+}
+
+.commentForm textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.commentForm button[type="submit"] {
+    padding: 8px 20px;
+    background-color: #007BFF;
+    border: none;
+    border-radius: 4px;
+    color: #fff;
+    cursor: pointer;
+}
+
+.commentForm button[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+.table-layout {
+    display: table;
+    width: 100%;
+}
+
+.table-row {
+    display: table-row;
+}
+
+.table-cell {
+    display: table-cell;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.table-cell:last-child {
+    border-bottom: none;
+}
