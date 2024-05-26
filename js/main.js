@@ -43,35 +43,61 @@ $(document).ready(function() {
             method: 'POST',
             data: $(this).serialize(),
             success: function(data) {
+                // console.log(data)
                 loadPosts();
             }
         });
     });
 
-    $('.load-more').click(function(e){
-        e.preventDefault();
-        var post_id = $(this).data('postid');
+     $('.load-more').on('click', function() {
+        var post_id = $(this).data('post_id');
         var offset = $(this).data('offset');
-        var limit = 3; // Assuming you have a fixed limit for comments per request
-
+        
         $.ajax({
-            url: 'load_comments.php',
+            url: 'load-comments.php',
             type: 'POST',
-            dataType: 'json',
-            data: {post_id: post_id, offset: offset, limit: limit},
-            success: function(response){
-                $('.comments[data-postid="'+post_id+'"]').append(response.comments_html);
-                $('.load-more[data-postid="'+post_id+'"]').data('offset', offset + limit);
-                
-                // Update the Load More button text to show remaining comments
-                if (response.remaining_comments > 0) {
-                    $('.load-more[data-postid="'+post_id+'"]').text('Load More (' + response.remaining_comments + ' remaining)');
-                } else {
-                    $('.load-more[data-postid="'+post_id+'"]').hide(); // Hide the button if no remaining comments
-                }
+            data: { post_id: post_id, offset: offset },
+            success: function(response) {
+                $('.comments[data-post_id="' + post_id + '"]').append(response);
             }
         });
     });
+
+    // $('.load-more').click(function(e){
+    //     e.preventDefault();
+    //     var post_id = $(this).data('post_id');
+    //     var offset = $(this).data('offset');
+    //     var limit = 3; 
+
+    //     $.ajax({
+    //         url: 'load_comments.php',
+    //         type: 'POST',
+    //         dataType: 'json',
+    //         data: {
+    //             post_id: post_id,
+    //             offset: offset,
+    //             limit: limit
+    //         },
+    //         success: function(response){
+    //             $('.comments[data-post_id="'+post_id+'"]').append(response.comments_html);
+    //             $('.load-more[data-post_id="'+post_id+'"]').data('offset', offset + limit);
+    //             if (response.remaining_comments > 0) {
+    //                 var popupWidth = 600;
+    //                 var popupHeight = 400;
+    //                 var left = (screen.width - popupWidth) / 2;
+    //                 var top = (screen.height - popupHeight) / 2;
+    //                 var popupParams = 'width=' + popupWidth + ', height=' + popupHeight + ', top=' + top + ', left=' + left;
+    //                 var popupWindow = window.open('popup.html', 'Popup', popupParams);
+    //             } else {
+    //                 $('.load-more[data-post_id="'+post_id+'"]').hide();
+    //             }
+    //         },
+    //         error: function(xhr, status, error) {
+    //             console.error(xhr.responseText);
+    //             // Handle error
+    //         }
+    //     });
+    // });
 });        
         
         
