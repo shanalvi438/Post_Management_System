@@ -49,19 +49,20 @@ $(document).ready(function() {
         });
     });
 
-     $('.load-more').on('click', function() {
-        var post_id = $(this).data('post_id');
-        var offset = $(this).data('offset');
+    //  $('.load-more').on('click', function() {
+    //     alert("d");
+    //     var post_id = $(this).data('post_id');
+    //     var offset = $(this).data('offset');
         
-        $.ajax({
-            url: 'load-comments.php',
-            type: 'POST',
-            data: { post_id: post_id, offset: offset },
-            success: function(response) {
-                $('.comments[data-post_id="' + post_id + '"]').append(response);
-            }
-        });
-    });
+    //     $.ajax({
+    //         url: 'load-comments.php',
+    //         type: 'POST',
+    //         data: { post_id: post_id, offset: offset },
+    //         success: function(response) {
+    //             $('.comments[data-post_id="' + post_id + '"]').append(response);
+    //         }
+    //     });
+    // });
 
     // $('.load-more').click(function(e){
     //     e.preventDefault();

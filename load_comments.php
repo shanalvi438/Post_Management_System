@@ -15,7 +15,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $comments_html = '';
     while ($row = $result->fetch_assoc()) {
-        $comments_html .= "<div class='comment' data-id='{$row['id']}'>{$row['content']}</div>";
+        $comments_html .= "<div class='comment' data-id='{$row['id']}'>
+                            <span style='font-size: 24px;'>{$row['content']}</span>:<span>{$row['created_at']}</span>
+                           </div>";
     }
 
     // Count total comments for the post

@@ -1,18 +1,15 @@
 <?php
 include 'db.php';
 
-$sql = "SELECT * FROM posts";
+$sql = "SELECT * FROM posts ORDER BY created_at  DESC";
 $result = $conn->query($sql);
 
 while($row = $result->fetch_assoc()) {
-    // Get total number of comments for the post
     $postId = $row['id'];
     $commentCountQuery = "SELECT COUNT(*) as total_comments FROM comments WHERE post_id = $postId";
     $commentCountResult = $conn->query($commentCountQuery);
     $commentCountRow = $commentCountResult->fetch_assoc();
     $totalComments = $commentCountRow['total_comments'];
-
-    // Set the initial number of comments to display
     $commentsToShow = 3;
 
     echo "<div class='post'>
@@ -22,7 +19,6 @@ while($row = $result->fetch_assoc()) {
             <h3>Comments</h3>
             <div class='comments' data-postid='{$row['id']}'>";
 
-    // Fetch comments for the post
     $SqlQuery = "SELECT * FROM comments WHERE post_id = $postId LIMIT $commentsToShow";
     $Results = $conn->query($SqlQuery);
 
@@ -31,16 +27,14 @@ while($row = $result->fetch_assoc()) {
                 <span style='font-size: 24px;'>{$commentRow['content']}</span>:<span>{$commentRow['created_at']}</span>
               </div>";
     }
-
-    // Display the 'Load More' button if there are more comments
+    
     if ($totalComments > $commentsToShow) {
         echo "</div>
               <button class='load-more btn btn-secondary bg-secondary' data-postid='{$row['id']}' data-offset='$commentsToShow'>Load More ($totalComments Comments)</button>";
     } else {
-        echo "($totalComments Comments)";
+        echo "($totalComments Comments)</div>";
     }
 
-    // Comment form
     echo "<form class='commentForm'>
             <input type='hidden' name='post_id' value='{$row['id']}'>
             <textarea name='content' placeholder='Comment'></textarea>
@@ -51,3 +45,43 @@ while($row = $result->fetch_assoc()) {
 
 $conn->close();
 ?>
+
+
+<!-- Include jQuery -->
+<!-- Include jQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+$(document).ready(function() {
+    $(document).on('click', '.load-more', function() {
+        var button = $(this);
+        var postId = button.data('postid');
+        var offset = button.data('offset');
+        var limit = 3; // Number of comments to load at a time
+
+        $.ajax({
+            url: 'load_comments.php',
+            type: 'POST',
+            data: {
+                post_id: postId,
+                offset: offset,
+                limit: limit
+            },
+            success: function(response) {
+                var data = JSON.parse(response);
+                if (data.comments_html) {
+                    // Append new comments
+                    $('.comments[data-postid="' + postId + '"]').append(data.comments_html);
+                    // Update offset
+                    button.data('offset', offset + limit);
+
+                    // Hide button if there are no remaining comments
+                    if (data.remaining_comments <= 0) {
+                        button.hide();
+                    }
+                }
+            }
+        });
+    });
+});
+</script>
+
